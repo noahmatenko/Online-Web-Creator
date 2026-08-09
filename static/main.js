@@ -220,12 +220,6 @@ function getAvailableName(fileName) {
 
 const indexedDB = window.indexedDB
 
-/*const IS_DEV = true;
-
-if (IS_DEV) {
-    indexedDB.deleteDatabase("projectFiles");
-}*/
-
 const openRequest = indexedDB.open("projectFiles", 1)
 let db;
 
@@ -1015,8 +1009,6 @@ async function testProject(e) {
 
         let filePath = generatePath(child).replace(/^\/[^\/]+/, "");
         if (!filePath.startsWith("/")) filePath = "/" + filePath;
-
-        console.log(filePath)
 
         const fileUrl = URL.createObjectURL(indexedFile.fileData)
         urlTable[filePath] = fileUrl
