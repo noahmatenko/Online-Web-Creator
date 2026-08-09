@@ -999,7 +999,7 @@ async function testProject(e) {
 
     for (const child of children) {
         const id = child.id + "test"
-        const fileIcon = child.querySelector(".fileIcon")
+        const fileIcon = child.querySelector(".icon")
         const fileName = child.querySelector(".fileName").cloneNode(true)
         fileName.id = fileName.id + "test"
 
