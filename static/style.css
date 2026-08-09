@@ -1,0 +1,609 @@
+html {
+    overscroll-behavior: none;
+}
+
+body {
+    background-color: #14141a;
+
+    margin: 0px;
+}
+
+.hideScrollbar {
+  scrollbar-width: none;
+  
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  
+  -ms-overflow-style: none;
+}
+
+#explorer {
+    background-color: #0f0f15;
+    border-right: 1px solid #303030;
+    scrollbar-color: rgba(0, 0, 0, 0.5) transparent;
+
+    overflow: auto;
+
+    width: 220px;
+
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    bottom: anchor(--bottomBar top);
+
+    display: grid;
+    grid-auto-flow: row;
+    align-content: start;
+
+    anchor-name: --explorer;
+}
+
+#explorerTitle {
+    background-color: inherit;
+    color: #707070;
+
+    font-size: 14px;
+    font-family: "Roboto Mono", monospace;
+
+    margin: 0px;
+    padding: 10px;
+
+    user-select: none;
+}
+
+.file, .testFile {
+    overflow: hidden;
+
+    min-width: max-content;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    box-sizing: border-box;
+
+    margin: 0px;
+    padding-left: calc(var(--depth) * 15px);
+}
+
+.file:hover:not(#projectFolder, .selected), .testFile:hover:not(.testSelected) {
+    background-color: #18181f
+}
+
+.selected:not(projectFolder) {
+    background-color: #303030
+}
+
+#projectFolder {
+    background-color: rgb(36, 36, 46.5);
+}
+
+.fileName {
+    background-color: transparent;
+    color: #d0d0d0;
+    border: none;
+    border-radius: 3px;
+    outline: none;
+
+    white-space: nowrap;
+    overflow: hidden;
+
+    min-width: fit-content;
+
+    font-size: 14px;
+    font-family: "Roboto Mono", monospace;
+
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+
+    user-select: none;
+
+    flex-grow: 1;
+    margin-right: 5px;
+    padding-left: 2px;
+}
+
+.fileName:focus {
+    border: 1px solid #d0d0d0;
+}
+
+.cutting {
+    opacity: 0.5;
+}
+
+.icon {
+    background-color: transparent;
+    border: 2px solid transparent;
+    border-radius: 5px;
+
+    width: 15px;
+    height: 15px;
+
+    margin: 5px;
+
+    flex-shrink: 0;
+}
+
+.selected, .testSelected {
+    box-shadow: inset 0 0 0 1px #d0d0d0;
+}
+
+.parentLine {
+    background-color: #707070;
+
+    width: 1px;
+    height: 100%;
+
+    position: static;
+}
+
+#click2Menu {
+    background-color: #18181f;
+    border: 1px solid #303030;
+    box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.5);
+    border-radius: 12px;
+
+    white-space: nowrap;
+
+    min-width: 12px;
+    width: fit-content;
+    min-height: 12px;
+    height: fit-content;
+
+    display: none;
+    flex-direction: column;
+
+    padding: 5px;
+
+    position: fixed;
+    top: 0px;
+    left: 0px;
+
+    z-index: 1;
+}
+
+.click2Selection {
+    background-color: transparent;
+    color: #d0d0d0;
+    border-radius: 9999px;
+
+    font-size: 12px;
+    font-family: "Roboto Mono", monospace;
+
+    padding: 5px;
+
+    user-select: none;
+}
+
+.click2Break {
+    background-color: #303030;
+    border: none;
+
+    width: 100%;
+    height: 1px;
+}
+
+.click2Selection:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+.click2Selection:active {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+#topbar {
+    margin: 0px;
+    background-color: #18181f;
+    border-bottom: 1px solid #303030;
+
+    overflow: hidden;
+
+    height: 38px;
+
+    padding-right: 5px;
+
+    position: fixed;
+    left: anchor(--explorer right);
+    right: 0px;
+    top: 0px;
+
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    flex-direction: row;
+    column-gap: 5px;
+
+    anchor-name: --topbar;
+}
+
+#bottomBar {
+    background-color: #0f0f15;
+    border-top: 1px solid #303030;
+    color: #d0d0d0;
+
+    font-size: 12px;
+    font-family: "Roboto Mono", monospace;
+    text-align: right;
+
+    padding: 5px;
+
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+
+    anchor-name: --bottomBar;
+}
+
+#editorTabs {
+    background-color: transparent;
+
+    overflow-x: auto;
+
+    display: flex;
+    align-items: stretch;
+    flex-direction: row;
+
+    flex-grow: 1;
+    align-self: stretch;
+
+    mask-image: linear-gradient(to right, black 90%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, black 90%, transparent 100%);
+}
+
+.tab {
+    background-color: #14141a;
+    border-right: 1px solid #303030;
+
+    overflow: hidden;
+
+    width: 150px;
+
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    flex-direction: row;
+
+    flex-shrink: 0;
+    padding: 5px;
+
+    animation: tabCreate 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.currentTab {
+    background-color: #0f0f15;
+    box-shadow: inset 0 2px 0 0 #d0d0d0, 0 0 5px 5px rgba(0, 0, 0, 0.5);
+
+    z-index: 1;
+}
+
+.closeTab {
+    opacity: 0;
+}
+
+.tab:hover .closeTab {
+    opacity: 1;
+}
+
+.tabName {
+    background-color: transparent;
+    color: #d0d0d0;
+
+    white-space: nowrap;
+    overflow: hidden;
+
+    font-size: 14px;
+    font-family: "Roboto Mono", monospace;
+
+    display: inline-block;
+    vertical-align: middle;
+
+    flex-grow: 1;
+
+    mask-image: linear-gradient(to right, black 80%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, black 80%, transparent 100%);
+}
+
+.tabName[data-all-saved="false"] {
+    color: #50b0ff;
+}
+
+@keyframes tabCreate {
+    0% {
+        width: 0px;
+    }
+
+    100% {
+        width: 150px;
+    }
+}
+
+#warningPopup {
+    background-color: #600000;
+    color: #d0d0d0;
+    border-radius: 10px;
+    box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.5);
+
+    font-size: 14px;
+    font-family: "Roboto Mono", monospace;
+    text-align: center;
+
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 20px;
+
+    padding: 5px;
+
+    user-select: none;
+
+    opacity: 0;
+    pointer-events: none;
+}
+
+.popupAppear {
+    animation: popup 2.5s linear forwards
+}
+
+@keyframes popup {
+    0% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+#testButton {
+    background-color: transparent;
+    border: 5px solid transparent;
+    border-radius: 5px;
+
+    width: 20px;
+    height: 20px;
+    box-sizing: content-box;
+
+    padding: 0;
+
+    flex-shrink: 0;
+}
+
+#downloadButton {
+    background-color: transparent;
+    border: 5px solid transparent;
+    border-radius: 5px;
+
+    width: 20px;
+    height: 20px;
+
+    flex-shrink: 0;
+}
+
+#testButton:hover, #downloadButton:hover, .folderArrow:hover, .closeTab:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+#testButton:active, #downloadButton:active, .folderArrow:active, .closeTab:active {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+#testButton:active svg path {
+    fill: #60e060;
+}
+
+#blankScreen {
+    background-color: #14141a;
+    color: #303030;
+
+    overflow: hidden;
+
+    font-size: 14px;
+    font-family: "Roboto Mono", monospace;
+    text-align: center;
+
+    position: absolute;
+    left: anchor(--explorer right);
+    right: 0px;
+    top: anchor(--topbar bottom);
+    bottom: anchor(--bottomBar top);
+
+    display: flex;
+    align-items: center;
+
+    padding: 75px;
+}
+
+#codeContainer {
+    background-color: #14141a;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-color: rgba(0, 0, 0, 0.5) transparent;
+
+    position: absolute;
+    left: anchor(--explorer right);
+    right: 0px;
+    top: anchor(--topbar bottom);
+    bottom: anchor(--bottomBar top);
+
+    display: none;
+    align-items: start;
+    justify-content: left;
+    flex-direction: row;
+}
+
+#lineCount {
+    background-color: #18181f;
+    color: #707070;
+    border-right: 1px solid #303030;
+
+    overflow: hidden;
+
+    min-height: 100%;
+    box-sizing: border-box;
+
+    font-size: 12px;
+    font-family: "Roboto Mono", monospace;
+    text-align: right;
+    line-height: 1.5;
+
+    margin: 0px;
+    padding: 5px 26px 5px 26px;
+
+    flex-shrink: 0;
+
+    anchor-name: --lineCount;
+}
+
+#codeField {
+    background-color: transparent;
+    color: #d0d0d0;
+    border: none;
+    outline: none;
+
+    overflow-y: hidden;
+
+    min-height: 100%;
+    box-sizing: border-box;
+
+    field-sizing: content;
+
+    white-space: no-wrap;
+
+    resize: none;
+
+    font-size: 12px;
+    font-family: "Roboto Mono", monospace;
+    line-height: 1.5;
+
+    padding: 5px;
+
+    flex-grow: 1;
+
+    -moz-tab-size: 4;
+    tab-size: 4;
+}
+
+#selectContainer {
+    background-color: rgba(0, 0, 0, 0.5);
+
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.selecting {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+
+#selectBox {
+    background-color: #14141a;
+    border: 10px solid #303030;
+    border-radius: 25px;
+
+    position: absolute;
+    left: 90px;
+    right: 90px;
+    top: 60px;
+    bottom: 60px;
+
+    display: flex;
+    align-items: stretch;
+    justify-content: left;
+    flex-direction: row;
+
+    opacity: 0;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+
+    transform: translateY(25px);
+}
+
+.selecting #selectBox {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#optionContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    row-gap: 25px;
+
+    flex-grow: 1;
+
+    padding: 25px;
+}
+
+#selectTitle {
+    color: #d0d0d0;
+
+    font-size: 24px;
+    font-family: "Roboto Mono", monospace;
+    text-align: center;
+
+    margin: 0;
+}
+
+#selectExplorer {
+    background-color: #0f0f15;
+    border-right: 10px solid #303030;
+    scrollbar-color: rgba(0, 0, 0, 0.5) transparent;
+
+    overflow: auto;
+
+    width: 220px;
+
+    display: grid;
+    grid-auto-flow: row;
+    align-content: start;
+}
+
+#selectButtons {
+    display: flex;
+    flex-direction: row;
+    column-gap: 14px;
+}
+
+.selectButton {
+    background-color: #18181f;
+    color: #d0d0d0;
+    border: 1px solid #303030;
+    border-radius: 5px;
+
+    font-size: 18px;
+    font-family: "Roboto Mono", monospace;
+
+    user-select: none;
+}
+
+.selectButton:hover:not(:disabled) {
+    background-color: rgb(30, 30, 38.75);
+}
+
+.selectButton:active:not(:disabled) {
+    background-color: rgb(19.2, 19.2, 24.8);
+}
+
+.selectButton:disabled {
+    color: #686868;
+}

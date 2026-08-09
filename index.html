@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html class="hideScrollbar" lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>OWC - Online Web Creator</title>
+        <meta name="description" content="Create and test static websites using HTML, CSS, and Javascript.">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&family=Fira+Mono:wght@400;500;700&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="static/style.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
+        <script src="static/main.js" defer></script>
+    </head>
+
+    <body>
+        <template id="iconsTemplate">
+            <svg id="icon_folder" class="icon fileIcon folderArrow" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 100 50">
+                <path d="M28.95937,40.215589L50,61.256219l21.04063-21.04063" transform="matrix(2.376355 0 0 2.376347 -68.817744 -95.566032) rotate(-90 50 50)" fill="none" stroke="#d0d0d0" stroke-width="2.5"/>
+            </svg>
+
+            <svg id="icon_html" class="icon fileIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                <path d="M37.727637,-7.263867v-7.263867l-22.681055-8.746289-1.964209-.66709l1.964209-.63003l22.681055-8.894531v-7.263867L6.300293,-26.720654v5.41084Zm14.416552-.037061l32.724463-14.045947v-5.41084L52.144189,-40.766602v7.078565l23.978174,8.894531l2.223633.704151-2.223633.630029-23.978174,9.042773Z" transform="matrix(1.272777 0 0 1.272777 -8.018868 80.566038)" fill="#f06529"/>
+            </svg>
+
+            <svg id="icon_css" class="icon fileIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                <path d="M0.681152,0l.690918-3.554687h.351563L1.030273,0Zm.993653,0l.693359-3.554687h.349121L2.023926,0Zm1.340332-2.199707h-2.539063v-.339355h2.539063Zm-.183106,1.19873h-2.541504v-.336914h2.541504Z" transform="matrix(28.131871 0 0 28.131871 3.502743 100.000001)" fill="#639"/>
+            </svg>
+
+            <svg id="icon_js" class="icon fileIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                <path d="M2.092285,-3.554687v2.473144q-.004883.151367-.05249.286865t-.135498.238037q-.090332.102539-.217285.162354t-.288086.059814q-.15625,0-.281983-.051269t-.216064-.146485q-.090332-.092773-.142822-.219726t-.059815-.275879h-.458984q.021972.246582.112305.445557t.241699.338134q.148926.141602.352783.217286t.452881.075683q.246582,0,.455322-.084228t.362549-.235596q.153808-.148926.24292-.356445t.093994-.454102v-2.473144Zm3.19336,2.65625q0,.146484-.063477.252685t-.163574.174561q-.100098.0708-.228272.103759t-.260009.032959q-.166016,0-.306397-.045166t-.247803-.135498q-.107422-.08789-.175781-.216064t-.090332-.29419h-.461426q.007324.229493.101319.41626t.255127.325928q.180664.161133.426025.246582t.499268.085449q.212402,0,.424804-.059814t.38086-.179444q.168457-.117187.274658-.29541t.106201-.41748q0-.236817-.098877-.417481t-.26001-.305176q-.163574-.134277-.361328-.220947t-.395508-.147705q-.119629-.036621-.255127-.085449t-.250244-.12207q-.117187-.073243-.192871-.179444t-.078125-.26001q0-.141601.057373-.249023t.155029-.180664q.095215-.073242.218506-.109863t.252686-.036621q.161133,0,.289306.050048t.220948.140381.148926.216065.075683.279541h.463867q-.004882-.244141-.10498-.441895t-.266113-.336914-.38086-.216064-.446777-.076905q-.209961,0-.417481.064698t-.371093.189209-.264893.305175-.101318.410157.101318.39917.262451.294189q.158692.12207.352783.20874t.382081.147705q.129394.041504.269775.092774t.257568.126953q.117188.078125.191651.19043t.074463.275879Z" transform="matrix(18.123894 0 0 18.123894 -4.336286 82.212394)" fill="#f7df1e"/>
+            </svg>
+
+            <svg id="icon_json" class="icon fileIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                <path d="M2.387695,0.893555l.05127-.280762q-.151367-.004883-.250244-.083008t-.157471-.200195q-.061035-.119629-.085449-.269776t-.024414-.301513v-.412598q-.002442-.290527-.136719-.511474t-.41748-.333252q.283203-.114747.418701-.335694t.135498-.513916v-.415039q0-.148926.014648-.300293t.06836-.273437q.051269-.119629.155029-.197754t.279541-.083008l-.05127-.280762q-.246582.007324-.419922.106201t-.280761.255127q-.114746.163575-.167237.369873t-.05249.404053v.415039q0,.354004-.167236.511475t-.511475.157471v.354003q.344239.002442.511475.161133t.167236.510254v.412598q0,.195312.056153.394287t.166015.360107q.114746.168457.288086.270996t.410156.109864Zm1.401368-.280762l.051269.280762q.239258-.004883.412598-.109864t.288086-.268554q.112304-.163574.166015-.362549t.053711-.394287v-.412598q0-.170898.039063-.29541t.119629-.20752q.083007-.085449.213623-.125732t.306396-.042725v-.354003q-.200195,0-.343017-.052491t-.223389-.167236q-.056152-.080566-.084229-.19165t-.028076-.257569v-.415039q0-.205078-.054931-.415039t-.179444-.378418q-.109863-.148926-.279541-.241699t-.406494-.100098l-.048828.280762q.175781.004883.27832.083008t.15625.197754q.05127.12207.067139.273437t.015869.300293v.415039q0,.19043.056152.352783t.17334.284424q.061035.065918.142822.119629t.179444.092774q-.095215.039062-.174561.090332t-.142822.114746q-.119629.119629-.177002.283203t-.057373.356445v.412598q0,.151367-.025635.301513t-.084228.269776q-.061035.12207-.161133.200195t-.249023.083008Z" transform="matrix(20.866021 0 0 20.866021 -14.977077 81.355062)" fill="#b0da09"/>
+            </svg>
+
+            <svg id="icon_txt" class="icon fileIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" onclick="">
+                <g transform="matrix(0.957846 0 0 0.957846 2.1077 2.1077)">
+                    <path d="M87.5,20L67.5,0h-55v100h75v-80Z" transform="matrix(1.002249 0 0 1 -0.11245 0)" fill="none" stroke="#d0d0d0" stroke-width="5" stroke-linejoin="round"/>
+                    <path d="M67.5,0v20h20" transform="matrix(1.002249 0 0 1 -0.174297 0)" fill="none" stroke="#d0d0d0" stroke-width="5" stroke-linejoin="round"/>
+                    <line x1="-5" y1="0" x2="30" y2="0" transform="matrix(1.002249 0 0 1 27.471888 20)" fill="none" stroke="#d0d0d0" stroke-width="5" stroke-linecap="round"/>
+                    <line x1="-5" y1="0" x2="15" y2="0" transform="matrix(1.002249 0 0 1 27.471888 35)" fill="none" stroke="#d0d0d0" stroke-width="5" stroke-linecap="round"/>
+                    <line x1="-5" y1="0" x2="30" y2="0" transform="matrix(1.002249 0 0 1 27.471888 50)" fill="none" stroke="#d0d0d0" stroke-width="5" stroke-linecap="round"/>
+                </g>
+            </svg>
+
+            <svg id="icon_other" class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                <g transform="matrix(0.957846 0 0 0.957846 2.1077 2.1077)">
+                    <path d="M87.5,20L67.5,0h-55v100h75v-80Z" transform="matrix(1.002249 0 0 1 -0.11245 0)" fill="none" stroke="#ffffff" stroke-width="5" stroke-linejoin="round"/>
+                    <path d="M67.5,0v20h20" transform="matrix(1.002249 0 0 1 -0.174297 0)" fill="none" stroke="#ffffff" stroke-width="5" stroke-linejoin="round"/>
+                </g>
+                
+                <path d="M18.713379,-15.014648h6.774902q0-1.428223.073242-2.545166t.366211-2.105713.897217-1.940918t1.702881-2.01416q1.721191-1.538086,3.497314-3.33252t3.204346-3.881836q1.428223-2.050781,2.34375-4.376221t.915528-4.962158q0-3.295898-1.062012-5.859375t-3.076172-4.35791-4.925537-2.728271-6.610108-.933838q-3.332519,0-6.207275.897216t-4.962158,2.581788q-2.124024,1.721191-3.369141,4.174804t-1.281738,5.529785h6.774902q0-1.904296.769043-3.277588t2.050781-2.288818q1.245118-.878906,2.874756-1.300049t3.35083-.421142q2.233887,0,3.955079.585937t2.856445,1.721192q1.02539,1.02539,1.556396,2.508545t.531006,3.387451q0,1.831054-.695801,3.479004t-1.757812,3.112793q-1.098633,1.501464-2.398682,2.856445t-2.545166,2.636719q-1.831054,1.68457-2.929687,2.911377t-1.684571,2.545166q-.585937,1.35498-.769043,3.057861t-.219726,4.3396Zm-.769043,11.462402q0,1.68457,1.043701,2.819824t3.131104,1.135254t3.167724-1.135254t1.080323-2.819824q0-1.757813-1.080323-2.929688t-3.167724-1.171875-3.131104,1.171875-1.043701,2.929688Z" transform="translate(27.2583 76.824951)" fill="#ffffff"/>
+            </svg>
+
+            <svg id="icon_closeTab" class="icon closeTab" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                <path d="M20,20L80,80M80,20L20,80" stroke="#d0d0d0" stroke-width="5" stroke-linecap="round"/>
+            </svg>
+        </template>
+
+        <div id="bottomBar" inert="true">
+            Ver. 0.5
+        </div>
+
+        <div id="explorer">
+            <p id="explorerTitle" inert="true">
+                EXPLORER
+            </p>
+        </div>
+
+        <div id="topbar">
+            <div id="editorTabs" class="hideScrollbar"></div>
+
+            <a id="downloadButton" title="Download your project">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                    <g transform="matrix(2.5 0 0 2.499988 -75 -77.505381)">
+                        <rect width="40" height="5" rx="2.5" ry="2.5" transform="translate(30 66.002349)" fill="#d0d0d0"/>
+                        <rect width="5" height="10" rx="2.5" ry="2.5" transform="translate(30 61.002349)" fill="#d0d0d0"/>
+                        <rect width="5" height="10" rx="2.5" ry="2.5" transform="translate(65 61.002349)" fill="#d0d0d0"/>
+                        <rect width="4" height="15" rx="2" ry="2" transform="translate(47.999877 31.002445)" fill="#d0d0d0"/>
+
+                        <g transform="matrix(-0.030658 0 0 -0.027308 69.640513 61.120125)">
+                            <g transform="matrix(5.24625 0 0 5.24625 -1992.934857 -1612.217225)">
+                                <path d="M509.4,349.5c-4.1-7.2-10.8-7.2-14.9,0L459.4,411c-4.1,7.2-.7,13,7.6,13h70c8.2,0,11.7-5.9,7.6-13l-35.2-61.5Z" fill="#d0d0d0"/>
+                            </g>
+                        </g>
+                    </g>
+                </svg>
+            </a>
+
+            <button id="testButton" title="Test your project">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 100 100" shape-rendering="geometricPrecision">
+                    <g transform="matrix(0.217507 0 0 0.217507 -102.244329 -37.569474)"> 
+                        <g transform="matrix(5.24625 0 0 5.24625 -1933.62 -1612.216844)">
+                            <path d="M509.4,349.5c-4.1-7.2-10.8-7.2-14.9,0L459.4,411c-4.1,7.2-.7,13,7.6,13h70c8.2,0,11.7-5.9,7.6-13l-35.2-61.5Z" transform="matrix(0 0.89 -0.89 0 843.795685 -62.722176)" fill="none" fill-opacity="100" stroke="#60e060" stroke-width="10"/>
+                        </g>
+                    </g>
+                </svg>
+            </button>
+        </div>
+
+        <div id="blankScreen" inert="true">
+            You currently have no tabs open. Double click or use the right click menu on a file in the explorer to open it. If you have no files open, you can create a new file by right clicking a folder in the explorer and selecting "Create new file", or by double clicking a folder. You can only open tabs for files that store text, but feel free to import any files you like to use in your project. Have fun!
+        </div>
+
+        <div id="codeContainer">
+            <div id="lineCount" inert="true">
+            </div>
+
+            <textarea id="codeField" class="hideScrollbar" wrap="off" spellcheck="false"></textarea>
+        </div>
+
+        <div id="warningPopup"></div>
+
+        <div id="selectContainer">
+            <div id="selectBox">
+                <div id="selectExplorer"></div>
+
+                <div id="optionContainer">
+                    <p id="selectTitle" inert="true">Select a file to start testing:</p>
+
+                    <div id="selectButtons">
+                        <button id="cancelButton" class="selectButton">Cancel</button>
+                        <button id="confirmButton" class="selectButton" disabled="true">Select</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="click2Menu"></div>
+    </body>
+</html>
