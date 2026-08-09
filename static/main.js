@@ -220,6 +220,12 @@ function getAvailableName(fileName) {
 
 const indexedDB = window.indexedDB
 
+/*const IS_DEV = true;
+
+if (IS_DEV) {
+    indexedDB.deleteDatabase("projectFiles");
+}*/
+
 const openRequest = indexedDB.open("projectFiles", 1)
 let db;
 
